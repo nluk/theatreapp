@@ -5,14 +5,19 @@ import java.util.*
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
-data class PlayDTO(
+open class PlayDTO {
     @NotBlank
-    val title : String,
+    val title: String = ""
     @NotNull
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
-    val date : Date,
-    val author : String?,
-    @NotNull
-    val remainingTickets : Long
-)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    lateinit var date: Date
+    lateinit var author: String
+}
 
+class PlayCreateDTO : PlayDTO(){
+    var hallId : Long = 0
+}
+
+class PlayDetailsDTO : PlayDTO() {
+    lateinit var hall: HallDTO
+}

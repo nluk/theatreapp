@@ -6,33 +6,22 @@ import javax.persistence.*
 
 @Entity
 @Table(name = "PLAYS")
-class Play {
+@AttributeOverrides(
+    AttributeOverride(name = "id", column = Column(name = "PLAY_ID", unique = true))
+)
+@SequenceGenerator(name = "SEQ_PLAY_ID", sequenceName = "SEQ_PLAY_ID", allocationSize = 1)
+class Play : BaseEntity() {
 
-    @Id
-    @Column(name = "PL_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id  = 0L
-
-    @Column(name = "PL_DATE")
+    @Column(name = "PLAY_DATE")
     var date = Date()
 
-    @Column(name = "PL_TITLE")
+    @Column(name = "PLAY_TITLE")
     var title = ""
 
-    @Column(name = "PL_AUTHOR")
+    @Column(name = "PLAY_AUTHOR")
     var author = ""
 
-    @Column(name = "PL_TICKETS")
+    @Column(name = "PLAY_TICKETS")
     var remainingTickets = 0L
-
-    fun fillProperties(playDTO: PlayDTO) {
-        playDTO.let {
-            date = it.date
-            title = it.title
-            author = it.author ?: ""
-            remainingTickets = it.remainingTickets
-        }
-    }
-
 
 }
