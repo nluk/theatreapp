@@ -9,7 +9,7 @@ import javax.persistence.*
 @AttributeOverrides(
     AttributeOverride(name = "id", column = Column(name = "PLAY_ID", unique = true))
 )
-@SequenceGenerator(name = "SEQ_PLAY_ID", sequenceName = "SEQ_PLAY_ID", allocationSize = 1)
+@SequenceGenerator(name = "SEQ_GEN", sequenceName = "SEQ_PLAY_ID", allocationSize = 1)
 class Play : BaseEntity() {
 
     @Column(name = "PLAY_DATE")
@@ -21,7 +21,21 @@ class Play : BaseEntity() {
     @Column(name = "PLAY_AUTHOR")
     var author = ""
 
-    @Column(name = "PLAY_TICKETS")
-    var remainingTickets = 0L
+    @JoinColumn(referencedColumnName = "HALL_ID")
+    @Column(name = "PLAY_HALL_ID")
+    var hallId = 0L
+
+    @JoinColumn(referencedColumnName = "HALL_ID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Hall::class, fetch =  FetchType.LAZY)
+    var hall : Hall? = null
+
+    fun fillProperties(playDTO: PlayDTO) {
+        playDTO.let {
+            date = it.date
+            title = it.title
+            author = it.author
+            hallId = it.hallId
+        }
+    }
 
 }

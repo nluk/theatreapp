@@ -8,16 +8,24 @@ import javax.validation.constraints.NotNull
 open class PlayDTO {
     @NotBlank
     val title: String = ""
+
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     lateinit var date: Date
-    lateinit var author: String
-}
 
-class PlayCreateDTO : PlayDTO(){
+    @NotBlank
+    var author: String = ""
+
+    @NotNull
     var hallId : Long = 0
 }
 
-class PlayDetailsDTO : PlayDTO() {
-    lateinit var hall: HallDTO
+open class PlayUpdateDTO : PlayDTO(){
+    @NotNull
+    var id = 0L
+}
+
+class PlayDetailsDTO : PlayUpdateDTO() {
+    var hall: HallDTO? = null
+    var remainingSeats : List<Pair<String, Int>>? = null
 }

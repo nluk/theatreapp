@@ -4,7 +4,7 @@ spring:
     username: sa
     password: password
     platform: org.hibernate.dialect.H2Dialect
-    url: jdbc:h2:file:D:/theatre/data/theatredb
+    url: jdbc:h2:file:/home/nluk/Studia/theatre/data
   jpa:
     hibernate:
       ddl-auto: create
